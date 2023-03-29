@@ -61,8 +61,8 @@ df_node["file"] = df_node["seriesuid"].apply(get_filename)
 df_node = df_node.dropna()
 
 # 循环遍历图像文件
-fcount = 0
-for img_file in file_list:
+#fcount = 0
+for fcount, img_file in enumerate(tqdm(file_list)):
     print("Getting mask for image file %s" % img_file.replace(luna_path, ""))
     mini_df = df_node[df_node["file"] == img_file]  # 得到所有结节
     if(len(mini_df) > 0):    #跳过没有结节的文件
