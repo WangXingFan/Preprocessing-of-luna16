@@ -2,7 +2,6 @@ from matplotlib import pyplot as plt
 from skimage import morphology
 from skimage import measure
 from sklearn.cluster import KMeans
-from skimage.transform import resize
 from glob import glob
 import numpy as np
 
@@ -22,13 +21,7 @@ for img_file in file_list:
 
         #寻找肺部附近的平均像素,以重新调整过度曝光的图像
         middle = img[100:400,100:400]
-        mean = np.mean(middle)
-        max = np.max(img)
-        min = np.min(img)
-
-        img[img==max] = mean
-        img[img==min] = mean
-
+        
         #使用Kmeans算法将前景（放射性不透明组织）和背景（放射性透明组织，即肺部）分离。
         #仅在图像中心进行此操作，以尽可能避免图像的非组织部分。
         kmeans = KMeans(n_clusters=2,n_init=10).fit(np.reshape(middle,[np.prod(middle.shape),1]))

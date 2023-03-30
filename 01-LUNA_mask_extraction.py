@@ -9,6 +9,16 @@ except:
     print('TQDM does make much nicer wait bars...')
     tqdm = lambda x: x
 
+def normalizePlanes(npzarray):
+    maxHU = 400
+    minHU = -1000
+    npzarray = (npzarray - minHU)/(maxHU - minHU)
+    npzarray[npzarray>1] = 1
+    npzarray[npzarray<0] = 0
+    npzarray *= 255
+
+    return (npzarray.astype(int))
+
 
 def make_mask(center,diam,z,width,height,spacing,origin):
     '''
@@ -43,7 +53,7 @@ def make_mask(center,diam,z,width,height,spacing,origin):
 
 
 luna_path = "E:/LUNA16/src/subset0/"
-output_path = "E:/VSCode/lung/npy/"
+output_path = "E:/VSCode/lung/npy"
 file_list = glob("E:\LUNA16\src\subset0/" + "*.mhd")
 
 # 获取数据中的每一行
@@ -94,7 +104,8 @@ for fcount, img_file in enumerate(tqdm(file_list)):
             for i,i_z in enumerate(np.arange(int(v_center[2])-1,int(v_center[2])+2).clip(0,num_z-1)):   #clip防止超出z
                 mask = make_mask(center,diam,i_z*spacing[2]+origin[2],width,height,spacing,origin)
                 masks[i] = mask
-                imgs[i] = img_array[i_z]
+                #imgs[i] = img_array[i_z]
+                imgs[i] = normalizePlanes(img_array[i_z])
             
             np.save(os.path.join(output_path,"images_%04d_%04d.npy" % (fcount, node_idx)),imgs)
             np.save(os.path.join(output_path,"masks_%04d_%04d.npy" % (fcount, node_idx)),masks)
