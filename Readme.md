@@ -10,4 +10,6 @@ LUNA16数据集的预处理过程
 
 02-LUNA_segment_lung_ROI.py
 
+03-LUNA_apply_the_masks.py
+
 show.py 用来查看检查输出是否符合预期
