@@ -3,7 +3,7 @@ from skimage import measure
 from skimage.transform import resize
 import numpy as np
 
-working_path = "npy/"
+working_path = "E:/VSCode/npy/npy0/"
 
 lungmask_list = glob(working_path + "lungmask_*.npy")
 out_images = []
@@ -42,9 +42,9 @@ for fname in lungmask_list:
                 min_row = B[0]
             if min_col > B[1]:
                 min_col = B[1]
-            if max_row > B[2]:
+            if max_row < B[2]:
                 max_row = B[2]
-            if max_col > B[3]:
+            if max_col < B[3]:
                 max_col = B[3]
         height = max_row-min_row
         width = max_col-min_col
@@ -55,9 +55,12 @@ for fname in lungmask_list:
 
         img = img[min_row:max_row,min_col:max_col]
         mask = mask[min_row:max_row,min_col:max_col]
+#        print("num_row: ",max_row-min_row)
+#        print("num_col: ",max_col-min_col)
         if max_row-min_row < 5 or max_col-min_col < 5:
             pass
         else:
+            print(2)
             mean = np.mean(img)
             max = np.max(img)
             min = np.min(img)
@@ -65,6 +68,7 @@ for fname in lungmask_list:
             new_img = resize(img,[512,512])
             new_node_mask = resize(node_mask[min_row:max_row,min_col:max_col],[512,512])
             out_images.append(new_img)
+#            print(len(out_images))
             out_nodemasks.append(new_node_mask)
 
 
