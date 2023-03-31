@@ -3,7 +3,7 @@ from skimage import measure
 from skimage.transform import resize
 import numpy as np
 
-working_path = "E:/VSCode/npy/npy0/"
+working_path = "E:/VSCode/npy/npy/"
 
 lungmask_list = glob(working_path + "lungmask_*.npy")
 out_images = []
@@ -60,7 +60,7 @@ for fname in lungmask_list:
         if max_row-min_row < 5 or max_col-min_col < 5:
             pass
         else:
-            print(2)
+#            print(2)
             mean = np.mean(img)
             max = np.max(img)
             min = np.min(img)
