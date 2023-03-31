@@ -87,5 +87,4 @@ test_i = int(0.2*num_images)
 np.save(working_path+"trainImages.npy",final_images[rand_i[test_i:]])
 np.save(working_path+"trainMasks.npy",final_masks[rand_i[test_i:]])
 np.save(working_path+"testImages.npy",final_images[rand_i[:test_i]])
-np.save(working_path+"testMasks.npy",final_masks[rand_i[:test_i]])
-    
+np.save(working_path+"testMasks.npy",final_masks[rand_i[:test_i]]) 
